@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5036314739191752309}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,9 +116,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6714101037803859111}
   - component: {fileID: 5114822813013021967}
+  - component: {fileID: 3054081340108080120}
   m_Layer: 0
   m_Name: MazeCell
-  m_TagString: Untagged
+  m_TagString: MazeCell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +160,21 @@ MonoBehaviour:
   bottomWall: {fileID: 4939291816790810512}
   rightWall: {fileID: 8459899581111827495}
   leftWall: {fileID: 7027875093360271637}
+--- !u!114 &3054081340108080120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647215831643698897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8114631e8a148e09af437677e3fb4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 1647215831643698897}
+  wallTextureFolderPath: Textures/Walls
+  floorTextureFolderPath: Textures/Floors
 --- !u!1 &3286426794920679621
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +189,7 @@ GameObject:
   - component: {fileID: 8502012330455049375}
   m_Layer: 0
   m_Name: TopWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -278,7 +294,7 @@ GameObject:
   - component: {fileID: 1542951583507040932}
   m_Layer: 0
   m_Name: BottomWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -383,7 +399,7 @@ GameObject:
   - component: {fileID: 5372397597569729874}
   m_Layer: 0
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -488,7 +504,7 @@ GameObject:
   - component: {fileID: 1568374412388547938}
   m_Layer: 0
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
