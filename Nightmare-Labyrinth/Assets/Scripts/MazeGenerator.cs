@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
-    //Bigger the range the more time to generate maze.
     [Range(5, 500)]
+    public int mazeWidth = 5, mazeHeight = 5; // Dimensions of the maze
+    public int startX, startY; // Position where maze generation will start.
+    public MazeCell[,] maze; // This is where array of maze cells will be stored.
 
-    public int mazeWidth = 5, mazeHeight = 5; //dimensions of the maze
-    public int startX, startY; //Position where maze generation will start.
-    MazeCell[,] maze; //This is where array of maze cells will be stored.
-
-    Vector2Int currentCell; //Maze cell we are currently at.
+    private Vector2Int currentCell; // Maze cell we are currently at.
 
     public MazeCell[,] GetMaze()
     {
@@ -30,16 +28,16 @@ public class MazeGenerator : MonoBehaviour
         return maze;
     }
 
-    List<Direction> directions = new List<Direction> {
+    private List<Direction> directions = new List<Direction> {
         Direction.Up, Direction.Down, Direction.Left, Direction.Right,
     };
 
-    List<Direction> GetRandomDirections()
+    private List<Direction> GetRandomDirections()
     {
-        List<Direction> dir = new List<Direction>(directions); //Copy of List above because we dont want to edit above list.
-        List<Direction> rndDir = new List<Direction>(); //randomized directions of maze list.
+        List<Direction> dir = new List<Direction>(directions); // Copy of List above because we don't want to edit above list.
+        List<Direction> rndDir = new List<Direction>(); // Randomized directions of maze list.
 
-        //Loop until rndDir is empty
+        // Loop until rndDir is empty
         while (dir.Count > 0)
         {
             int rnd = Random.Range(0, dir.Count);
@@ -49,21 +47,21 @@ public class MazeGenerator : MonoBehaviour
         return rndDir;
     }
 
-    bool IsCellValid(int x, int y)
+    private bool IsCellValid(int x, int y)
     {
-        if (x < 0 || y < 0 || x > mazeWidth - 1 || y > mazeHeight - 1 || maze[x, y].visited) return false; //if cell outside of map or visited, it is not valid.
+        if (x < 0 || y < 0 || x > mazeWidth - 1 || y > mazeHeight - 1 || maze[x, y].visited) return false; // If cell outside of map or visited, it is not valid.
         else return true;
     }
 
-    Vector2Int CheckNeighbours()
+    private Vector2Int CheckNeighbours()
     {
         List<Direction> rndDir = GetRandomDirections();
 
         for (int i = 0; i < rndDir.Count; i++)
         {
-            Vector2Int neighbour = currentCell; //set neighbour to current cell
+            Vector2Int neighbour = currentCell; // Set neighbour to current cell
 
-            //Modify neighbour based on random directions we're currently trying
+            // Modify neighbour based on random directions we're currently trying
             switch (rndDir[i])
             {
                 case Direction.Up:
@@ -80,64 +78,60 @@ public class MazeGenerator : MonoBehaviour
                     break;
             }
 
-            if (IsCellValid(neighbour.x, neighbour.y)) return neighbour; //checks to see if neighbour we tried is valid if not we rerun again.
+            if (IsCellValid(neighbour.x, neighbour.y)) return neighbour; // Checks to see if neighbour we tried is valid if not we rerun again.
         }
 
-        return currentCell; //if no valid neighbour was found, we return currentCell
+        return currentCell; // If no valid neighbour was found, we return currentCell
     }
 
-    //Takes in maze positions and sets cells accordingly.
-    void BreakWalls(Vector2Int primaryCell, Vector2Int secondaryCell)
+    private void BreakWalls(Vector2Int primaryCell, Vector2Int secondaryCell)
     {
-
-        //We can go in one direction at a time.
-        if (primaryCell.x > secondaryCell.x) //Primary Cells left wall
+        // We can go in one direction at a time.
+        if (primaryCell.x > secondaryCell.x) // Primary Cells left wall
         {
             maze[primaryCell.x, primaryCell.y].leftWall = false;
         }
-        else if (primaryCell.x < secondaryCell.x) //Secondary Cell Left Wall
+        else if (primaryCell.x < secondaryCell.x) // Secondary Cell Left Wall
         {
             maze[secondaryCell.x, secondaryCell.y].leftWall = false;
         }
-        else if (primaryCell.y < secondaryCell.y) //Primary Cell Top Wall
+        else if (primaryCell.y < secondaryCell.y) // Primary Cell Top Wall
         {
             maze[primaryCell.x, primaryCell.y].topWall = false;
         }
-        else if (primaryCell.y > secondaryCell.y) //Secondary Cell Top Wall
+        else if (primaryCell.y > secondaryCell.y) // Secondary Cell Top Wall
         {
             maze[secondaryCell.x, secondaryCell.y].topWall = false;
         }
     }
 
-    //Starting at x, y passed in, carves path until it encounters a "Dead End"
-    //A Dead end is a cell with no neighbours.
-    void CarvePath(int x, int y)
+    private void CarvePath(int x, int y)
     {
-        if (x < 0 || y < 0 || x > mazeWidth - 1 || y > mazeHeight - 1) // check to see if start position is inside map, if not default to 0
+        if (x < 0 || y < 0 || x > mazeWidth - 1 || y > mazeHeight - 1) // Check to see if start position is inside map, if not default to 0
         {
             x = y = 0;
         }
 
-        currentCell = new Vector2Int(x, y); //set current cell position to the starting points we passed in the funtion.
+        currentCell = new Vector2Int(x, y); // Set current cell position to the starting points we passed in the function.
 
-        List<Vector2Int> path = new List<Vector2Int>();  //keeps track of current path.
+        List<Vector2Int> path = new List<Vector2Int>(); // Keeps track of current path.
 
-        //loop occurs until dead end is encountered.
+        // Loop occurs until dead end is encountered.
         bool deadEnd = false;
         while (!deadEnd)
         {
-            Vector2Int nextCell = CheckNeighbours(); //gets next cell.
+            Vector2Int nextCell = CheckNeighbours(); // Gets next cell.
 
-            //if no valid neighbours set deadend to true.
+            // If no valid neighbours set deadend to true.
             if (nextCell == currentCell)
             {
                 for (int i = path.Count - 1; i >= 0; i--)
                 {
-                    currentCell = path[i]; //set current cell to next step back.
-                    path.RemoveAt(i); //removes step from path.
-                    nextCell = CheckNeighbours(); //checks to see if any neighbours valid
+                    currentCell = path[i]; // Set current cell to next step back.
+                    path.RemoveAt(i); // Removes step from path.
+                    nextCell = CheckNeighbours(); // Checks to see if any neighbours valid
 
-                    if (nextCell != currentCell) break; //if valid neighbour is found, it breaks out of loop
+                    if (nextCell != currentCell) break; // If valid neighbour is found, it breaks out of loop
                 }
 
                 if (nextCell == currentCell)
@@ -147,10 +141,10 @@ public class MazeGenerator : MonoBehaviour
             }
             else
             {
-                BreakWalls(currentCell, nextCell); //set wall flags on these two cells
-                maze[currentCell.x, currentCell.y].visited = true; //set cells to visited 
-                currentCell = nextCell; // current cell is then changed to  neighbour we are now moving to
-                path.Add(currentCell); //cell is added to path
+                BreakWalls(currentCell, nextCell); // Set wall flags on these two cells
+                maze[currentCell.x, currentCell.y].visited = true; // Set cells to visited
+                currentCell = nextCell; // Current cell is then changed to neighbour we are now moving to
+                path.Add(currentCell); // Cell is added to path
             }
         }
     }
@@ -182,15 +176,14 @@ public class MazeCell
 
     public MazeCell(int x, int y)
     {
-
-        //Coordinated of the cell 
+        // Coordinates of the cell 
         this.x = x;
         this.y = y;
 
         // Check if algorithm has visited cell.
         visited = false;
 
-        //All walls of cell will need to be present until removed by algorithm.
+        // All walls of cell will need to be present until removed by algorithm.
         topWall = leftWall = true;
     }
 }
