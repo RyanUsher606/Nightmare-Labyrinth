@@ -11,6 +11,9 @@ public class MazeGenerator : MonoBehaviour
 
     private Vector2Int currentCell; // Maze cell we are currently at.
 
+    public GameObject examplePlayer;
+
+
     public MazeCell[,] GetMaze()
     {
         maze = new MazeCell[mazeWidth, mazeHeight];
@@ -24,8 +27,23 @@ public class MazeGenerator : MonoBehaviour
         }
 
         CarvePath(startX, startY);
+        InstantiatePlayer();
 
         return maze;
+    }
+
+    private void InstantiatePlayer()
+    {
+        Vector2Int randomPosition = GetRandomPosition();
+        Vector3 playerPosition = new Vector3(randomPosition.x, 0, randomPosition.y);
+        Instantiate(examplePlayer, playerPosition, Quaternion.identity);
+    }
+
+    private Vector2Int GetRandomPosition()
+    {
+        int randomX = Random.Range(0, mazeWidth);
+        int randomY = Random.Range(0, mazeHeight);
+        return new Vector2Int(randomX, randomY);
     }
 
     private List<Direction> directions = new List<Direction> {
