@@ -16,46 +16,60 @@ public class EnemyAi : MonoBehaviour
     bool walkPointSet;
     public float walkPointRange;
 
-    //Commenting out because I don't know how we want to attack yet.
-    /*Attacking
-    public float timeBetweenAttcaks
-    bool alreadyAttacked
-    */
-
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
     private void Awake()
     {
-        player = GameObject.Find("Example_Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        // Configure NavMeshAgent for obstacle avoidance
+        agent.radius = 0.5f; // Adjust based on your maze
+        agent.height = 2.0f; // Adjust based on your maze
+        agent.speed = 3.5f; // Adjust based on your desired speed
+        agent.acceleration = 8.0f; // Adjust for desired responsiveness
+        agent.angularSpeed = 120.0f; // Adjust for desired turning speed
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        agent.avoidancePriority = 50; // Adjust based on your needs
     }
 
     private void Update()
     {
+        if (player == null)
+        {
+            // Attempt to find the player if it's not set
+            GameObject playerObject = GameObject.Find("TestExample");
+            if (playerObject != null)
+            {
+                player = playerObject.transform;
+            }
+        }
+
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if(!playerInSightRange && !playerInAttackRange) Patroling();
-        if(playerInSightRange && !playerInAttackRange) ChasePlayer();
+        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         //if(playerInSightRange && playerInAttackRange) AttackPlayer(); //Commenting out bc dont know how to attack yet.
     }
 
     private void Patroling()
     {
-        if(!walkPointSet) SearchWalkPoint();
+        if (!walkPointSet) SearchWalkPoint();
 
-        if(walkPointSet)
+        if (walkPointSet)
         {
-            agent.SetDestination(walkPoint);
+            if (agent.isOnNavMesh)
+            {
+                agent.SetDestination(walkPoint);
+            }
         }
 
         //Calculate distance of walkpoint
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //if distance less than 1 walkpoint has been reached.
-        if(distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1f)
         {
             walkPointSet = false; //this automatically searchs for a new Search walk point.
         }
@@ -69,7 +83,7 @@ public class EnemyAi : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
         
-        if(Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
         {
             walkPointSet = true;
         }
@@ -77,13 +91,15 @@ public class EnemyAi : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        if (agent.isOnNavMesh)
+        {
+            agent.SetDestination(player.position);
+        }
     }
 
     /* //Commenting out because we dont know attack yet.
     private void AttackPlayer()
     {
-
         //Place Attack Code here.
 
         //this is to make the enemy not move when attacking.
