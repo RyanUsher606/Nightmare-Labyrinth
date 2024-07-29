@@ -42,7 +42,7 @@ public class MazeGenerator : MonoBehaviour
         Vector2Int randomPosition = GetRandomPosition();
         Vector3 playerPosition = new Vector3(randomPosition.x, 0, randomPosition.y);
         instantiatedPlayer = Instantiate(examplePlayer, playerPosition, Quaternion.identity);
-        instantiatedPlayer.name = "Player"; // Ensure the name matches the one in EnemyAi script
+        instantiatedPlayer.name = "TestExample"; // Ensure the name matches the one in EnemyAi script
     }
 
     private IEnumerator BakeNavMeshAndInstantiateEnemies()
