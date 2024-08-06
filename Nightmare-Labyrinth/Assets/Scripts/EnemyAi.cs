@@ -38,7 +38,7 @@ public class EnemyAi : MonoBehaviour
         if (player == null)
         {
             // Attempt to find the player if it's not set
-            GameObject playerObject = GameObject.Find("TestExample");
+            GameObject playerObject = GameObject.Find("PlayerObj");
             if (playerObject != null)
             {
                 player = playerObject.transform;
