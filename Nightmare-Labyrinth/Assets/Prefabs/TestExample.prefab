@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 7426153469408190811}
   - component: {fileID: 2361037430205958161}
   - component: {fileID: 8822011963338130423}
+  - component: {fileID: 1456396857497610530}
   m_Layer: 8
   m_Name: PlayerLight
   m_TagString: Untagged
@@ -157,6 +158,23 @@ MonoBehaviour:
   minIntensity: 0.1
   maxIntensity: 3
   flickerSpeed: 1
+--- !u!114 &1456396857497610530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167584479556437229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a826e36e6a13946b99810247bd3088ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endLight: {fileID: 2361037430205958161}
+  player: {fileID: 8385667079203080673}
+  farColor: {r: 1, g: 0, b: 0, a: 1}
+  closeColor: {r: 1, g: 1, b: 0.96862745, a: 1}
+  maxDistance: 5
 --- !u!1 &3384772127384769298
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +493,7 @@ GameObject:
   - component: {fileID: 8385667079203080673}
   - component: {fileID: 521595021561825318}
   - component: {fileID: 1298802541510348085}
+  - component: {fileID: 3663037038615990163}
   m_Layer: 8
   m_Name: ExamplePlayer
   m_TagString: Untagged
@@ -557,6 +576,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &3663037038615990163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4503337850069841505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d368e057abdf44360b73ea717e12426e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6568774604792644678
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +599,7 @@ GameObject:
   - component: {fileID: 830051244878338572}
   m_Layer: 0
   m_Name: TestExample
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

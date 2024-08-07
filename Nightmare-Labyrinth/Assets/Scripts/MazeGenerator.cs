@@ -14,6 +14,7 @@ public class MazeGenerator : MonoBehaviour
 
     public GameObject examplePlayer;
     public GameObject enemyPrefab; // Enemy prefab to instantiate
+    public NavMeshSurface navMeshSurface; // NavMeshSurface for baking navigation mesh
 
     private GameObject instantiatedPlayer; // Reference to the instantiated player
 
@@ -31,7 +32,7 @@ public class MazeGenerator : MonoBehaviour
 
         CarvePath(startX, startY); // Carve out the maze path starting from the initial position
         InstantiatePlayer(); // Instantiate the player at a random position
-        InstantiateEnemies(); // instantiate enemies 
+        StartCoroutine(BakeNavMeshAndInstantiateEnemies()); // Bake the NavMesh and instantiate enemies after baking
 
         return maze;
     }
@@ -44,20 +45,48 @@ public class MazeGenerator : MonoBehaviour
         instantiatedPlayer.name = "PlayerObj"; // Ensure the name matches the one in EnemyAi script
     }
 
+    private IEnumerator BakeNavMeshAndInstantiateEnemies()
+    {
+        // Wait for the end of the frame to ensure all objects are positioned correctly
+        yield return new WaitForEndOfFrame();
+
+        // Bake the NavMesh
+        navMeshSurface.BuildNavMesh();
+
+        // Wait for the NavMesh to be fully built
+        yield return new WaitUntil(() => navMeshSurface.navMeshData != null);
+
+        // Instantiate the enemies
+        InstantiateEnemies();
+    }
+
     private void InstantiateEnemies()
     {
-        Vector2Int randomPosition = GetRandomPosition();
-        Vector3 enemyPosition = new Vector3(randomPosition.x, 0, randomPosition.y);
-
-
-        GameObject enemy = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
-
-        // Assign the player object to the enemy's script
-        EnemyAi enemyAI = enemy.GetComponent<EnemyAi>();
-        if (enemyAI != null)
+        // Try a few times to find a valid position on the NavMesh
+        for (int i = 0; i < 10; i++)
         {
-            enemyAI.player = instantiatedPlayer.transform;
+            Vector2Int randomPosition = GetRandomPosition();
+            Vector3 enemyPosition = new Vector3(randomPosition.x, 0, randomPosition.y);
+
+            // Debug the positions being checked
+            Debug.DrawLine(enemyPosition + Vector3.up * 2, enemyPosition, Color.red, 10.0f);
+
+            // Check if the position is on the NavMesh
+            if (UnityEngine.AI.NavMesh.SamplePosition(enemyPosition, out UnityEngine.AI.NavMeshHit hit, 1.0f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                GameObject enemy = Instantiate(enemyPrefab, hit.position, Quaternion.identity);
+
+                // Assign the player object to the enemy's script
+                EnemyAi enemyAI = enemy.GetComponent<EnemyAi>();
+                if (enemyAI != null)
+                {
+                    enemyAI.player = instantiatedPlayer.transform;
+                }
+                return;
+            }
         }
+
+        Debug.LogError("Failed to find a valid position on the NavMesh for enemy instantiation");
     }
 
     private Vector2Int GetRandomPosition()

@@ -7,9 +7,10 @@ public class MazeRenderer : MonoBehaviour
     [SerializeField] MazeGenerator mazeGenerator;
     [SerializeField] GameObject MazeCellPrefab;
 
+    private List<GameObject> mazeCells = new List<GameObject>();
     public float CellSize = 1f;
 
-    private void Start()
+    private void populateMaze()
     {
         MazeCell[,] maze = mazeGenerator.GetMaze(); // Get our MazeGenerator Script.
 
@@ -20,6 +21,9 @@ public class MazeRenderer : MonoBehaviour
             {
                 // Instantiate a new maze cell prefab
                 GameObject newCell = Instantiate(MazeCellPrefab, new Vector3((float)x * CellSize, 0f, (float)y * CellSize), Quaternion.identity, transform);
+
+                // Push object
+                mazeCells.Add(newCell);
 
                 // Get reference to the cell's MazeCellObject script.
                 MazeCellObject mazeCell = newCell.GetComponent<MazeCellObject>();
@@ -37,5 +41,21 @@ public class MazeRenderer : MonoBehaviour
                 mazeCell.Init(top, bottom, right, left, true); // The last parameter sets the roof to active
             }
         }
+    }
+
+    private void Start()
+    {
+        populateMaze();
+    }
+
+    public void RegenerateMaze()
+    {
+        // Clearing off the old maze
+        foreach (GameObject cell in mazeCells)
+        {
+            Destroy(cell);
+        }
+
+        populateMaze();
     }
 }
