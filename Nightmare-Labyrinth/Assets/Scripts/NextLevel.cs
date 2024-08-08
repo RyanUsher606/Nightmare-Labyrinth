@@ -1,35 +1,47 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class EndTrigger : MonoBehaviour
+public class NextLevelButton : MonoBehaviour
 {
+    // Fetching the required objects to load the next level
     private MazeRenderer mazeRenderer;
     private MazeGenerator mazeGenerator;
 
-    private void Start()
+    public Button NextLevel;
+    public Button QuitGame;
+
+    public void Start()
     {
+        // Fetching the objects when initialized
         mazeRenderer = FindObjectOfType<MazeRenderer>();
         mazeGenerator = FindObjectOfType<MazeGenerator>();
+
+        NextLevel.gameObject.SetActive(false);
+        NextLevel.interactable = true;
+
+        NextLevel.onClick.AddListener(LoadNextLevel);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void LoadNextLevel()
     {
+        print("I got called!!");
+        print(mazeRenderer);
+        print(mazeGenerator);
 
-        if (other.CompareTag("Player"))
-        {
-            Time.timeScale = 0; // Pause the time
-            LoadNextLevel();
-        }
-    }
-
-    private void LoadNextLevel()
-    {
         if (mazeRenderer != null && mazeGenerator != null)
         {
+            print("Got here!!");
+            // Get rid of components and then regenerate
             DeletePlayerAndEnemies();
             mazeRenderer.RegenerateMaze();
-            Time.timeScale = 1; // Resume normal time
+
+            // Make the buttons go away
+            NextLevel.gameObject.SetActive(false);
+            QuitGame.gameObject.SetActive(false);
+
+            // Resuming normal time now
+            Time.timeScale = 1;
 
         }
         else

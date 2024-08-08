@@ -12,6 +12,8 @@ public class EndLightController : MonoBehaviour
 
     void Update()
     {
+
+
         if (player != null)
         {
             float distance = Vector3.Distance(player.position, endPosition);
@@ -21,8 +23,10 @@ public class EndLightController : MonoBehaviour
 
             if (t > 0)
             {
-                print(t);
-                endLight.color = Color.Lerp(farColor, closeColor, t);
+
+                Color lerpedColor = Color.Lerp(farColor, closeColor, t);
+                float brightnessIncrease = Mathf.Lerp(0.5f, 7.5f, t);
+                endLight.color = lerpedColor * brightnessIncrease;
             }
         }
     }
