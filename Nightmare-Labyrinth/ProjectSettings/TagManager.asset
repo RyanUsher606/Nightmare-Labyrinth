@@ -7,6 +7,9 @@ TagManager:
   - Wall
   - MazeCell
   - Floor
+  - Enemy
+  - NextLevel
+  - Quit
   layers:
   - Default
   - TransparentFX
