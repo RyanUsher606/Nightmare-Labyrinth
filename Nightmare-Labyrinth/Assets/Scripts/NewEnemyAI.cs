@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
         // Find the player object in the scene by name "PlayerObj"
         if (player == null)
         {
-            GameObject playerObj = GameObject.Find("PlayerObj");
+            GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null)
             {
                 player = playerObj.transform;
