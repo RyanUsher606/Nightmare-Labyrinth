@@ -125,20 +125,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        if (Stamina != 0)
+        //Mode - Sprinting
+        if (grounded && Input.GetKey(sprintKey) && Stamina > 0)
         {
-            //Mode - Sprinting
-            if (grounded && Input.GetKey(sprintKey))
-            {
-                state = MovementState.sprinting;
-                moveSpeed = sprintSpeed;
-                Stamina -= RunCost * Time.deltaTime;
-                if (Stamina < 0) Stamina = 0;
-                StaminaBar.fillAmount = Stamina / maxStamina;
+            state = MovementState.sprinting;
+            moveSpeed = sprintSpeed;
+            Stamina -= RunCost * Time.deltaTime;
+            if (Stamina < 0) Stamina = 0;
+            StaminaBar.fillAmount = Stamina / maxStamina;
 
-                if (recharge != null) StopCoroutine(recharge);
-                recharge = StartCoroutine(RechargeStamina());
-            }
+            if (recharge != null) StopCoroutine(recharge);
+            recharge = StartCoroutine(RechargeStamina());
         }
 
         //Mode - Walking
@@ -216,4 +213,5 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 }
+
 
