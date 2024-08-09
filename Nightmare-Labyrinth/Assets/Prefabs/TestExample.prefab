@@ -548,6 +548,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   orientation: {fileID: 867840013057965084}
+  Stamina: 100
+  maxStamina: 100
+  RunCost: 25
+  StaminaBar: {fileID: 7177063026589574899, guid: 80c77ffa2968c41cea7244ec77da8ebf, type: 3}
+  chargeRate: 10
   state: 0
 --- !u!54 &1298802541510348085
 Rigidbody:

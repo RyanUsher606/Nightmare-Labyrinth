@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -40,6 +41,14 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+
+    public float Stamina, maxStamina;
+    public float RunCost;
+    public Image StaminaBar;
+    public float chargeRate;
+
+    private Coroutine recharge;
+
     public MovementState state;
 
     public enum MovementState
@@ -56,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true; //if this is false, player falls over.
         readyToJump = true;
         startYScale = transform.localScale.y;
+        StaminaBar = GameObject.Find("Stamina").GetComponent<Image>();
     }
 
     private void Update()
@@ -78,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     private void FixedUpdate()
     {
         MovePlayer();
@@ -89,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         //When to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
 
@@ -99,14 +110,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Start crouching
-        if(Input.GetKeyDown(crouchKey))
+        if (Input.GetKeyDown(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
 
         //Stop Crouching
-        if(Input.GetKeyUp(crouchKey))
+        if (Input.GetKeyUp(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
@@ -114,22 +125,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        //Mode - Sprinting
-        if(grounded && Input.GetKey(sprintKey))
+        if (Stamina != 0)
         {
-            state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
+            //Mode - Sprinting
+            if (grounded && Input.GetKey(sprintKey))
+            {
+                state = MovementState.sprinting;
+                moveSpeed = sprintSpeed;
+                Stamina -= RunCost * Time.deltaTime;
+                if (Stamina < 0) Stamina = 0;
+                StaminaBar.fillAmount = Stamina / maxStamina;
+
+                if (recharge != null) StopCoroutine(recharge);
+                recharge = StartCoroutine(RechargeStamina());
+            }
         }
 
         //Mode - Walking
-        else if(grounded)
+        else if (grounded)
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
         }
 
         //Mode- Coruching
-        else if(Input.GetKey(crouchKey))
+        else if (Input.GetKey(crouchKey))
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
@@ -147,11 +167,11 @@ public class PlayerMovement : MonoBehaviour
         //This calculates movement direction and move the way camera is facing
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        if(grounded)
+        if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
-        else if(!grounded)
+        else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -163,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         //limit Velocity
-        if(flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
@@ -181,6 +201,19 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private IEnumerator RechargeStamina()
+    {
+        yield return new WaitForSeconds(1f);
+
+        while (Stamina < maxStamina)
+        {
+            Stamina += chargeRate / 10f;
+            if (Stamina > maxStamina) Stamina = maxStamina;
+            StaminaBar.fillAmount = Stamina / maxStamina;
+            yield return new WaitForSeconds(.1f);
+        }
     }
 }
 
