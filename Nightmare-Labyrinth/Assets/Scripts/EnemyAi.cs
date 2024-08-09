@@ -11,24 +11,25 @@ public class EnemyAi : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    //Patroling
+    // Patrolling
     public Vector3 walkPoint;
     bool walkPointSet;
-    public float walkPointRange;
+    public float walkPointRange = 0.5f; // Adjusted for smaller environment
 
-    //States
-    public float sightRange, attackRange;
+    // States
+    public float sightRange = 1.5f;  // Adjusted for smaller environment
+    public float attackRange = 0.2f; // Adjusted for smaller environment
     public bool playerInSightRange, playerInAttackRange;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         // Configure NavMeshAgent for obstacle avoidance
-        agent.radius = 0.5f; // Adjust based on your maze
-        agent.height = 2.0f; // Adjust based on your maze
-        agent.speed = 3.5f; // Adjust based on your desired speed
-        agent.acceleration = 8.0f; // Adjust for desired responsiveness
-        agent.angularSpeed = 120.0f; // Adjust for desired turning speed
+        agent.radius = 0.05f; // Adjusted for smaller environment
+        agent.height = 0.2f;  // Adjusted for smaller environment
+        agent.speed = 0.35f;  // Adjusted for smaller environment
+        agent.acceleration = 0.8f;  // Adjusted for smaller environment
+        agent.angularSpeed = 12.0f;  // Adjusted for smaller environment
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
         agent.avoidancePriority = 50; // Adjust based on your needs
     }
@@ -50,7 +51,7 @@ public class EnemyAi : MonoBehaviour
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        //if(playerInSightRange && playerInAttackRange) AttackPlayer(); //Commenting out bc dont know how to attack yet.
+        //if(playerInSightRange && playerInAttackRange) AttackPlayer(); //Commented out as attack isn't implemented yet
     }
 
     private void Patroling()
@@ -65,25 +66,26 @@ public class EnemyAi : MonoBehaviour
             }
         }
 
-        //Calculate distance of walkpoint
+        // Calculate distance to walkpoint
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        //if distance less than 1 walkpoint has been reached.
-        if (distanceToWalkPoint.magnitude < 1f)
+        // If distance less than 0.1 (for smaller environment) walkpoint has been reached
+        if (distanceToWalkPoint.magnitude < 0.1f)
         {
-            walkPointSet = false; //this automatically searchs for a new Search walk point.
+            walkPointSet = false; // Automatically search for a new walk point
         }
     }
 
     private void SearchWalkPoint()
     {
-        //Calculate the random point in Range.
+        // Calculate the random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+
+        // Check if the point is on the ground
+        if (Physics.Raycast(walkPoint, -transform.up, 0.2f, whatIsGround)) // Adjusted for smaller environment
         {
             walkPointSet = true;
         }
@@ -97,12 +99,13 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
-    /* //Commenting out because we dont know attack yet.
+    /* 
+    //Commenting out because we don't have an attack implementation yet.
     private void AttackPlayer()
     {
         //Place Attack Code here.
 
-        //this is to make the enemy not move when attacking.
+        //This is to make the enemy not move when attacking.
         agent.SetDestination(transform.position);
         transform.LookAt(player);
 
@@ -117,6 +120,5 @@ public class EnemyAi : MonoBehaviour
     {
         alreadyAttacked = false;
     }
-
     */
 }

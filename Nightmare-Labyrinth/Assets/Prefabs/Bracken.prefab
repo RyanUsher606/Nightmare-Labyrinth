@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8572109666536393635}
   - component: {fileID: 8788993935991696643}
   - component: {fileID: 7775680755036590014}
+  - component: {fileID: 3671632912732703123}
+  - component: {fileID: 5367016283644324006}
   m_Layer: 0
   m_Name: Bracken
   m_TagString: Untagged
@@ -84,6 +86,41 @@ CapsuleCollider:
   m_Height: 7
   m_Direction: 1
   m_Center: {x: 0, y: 2.763603, z: 0}
+--- !u!136 &3671632912732703123
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178259134005273492}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.6
+  m_Height: 7
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.763603, z: 0}
+--- !u!114 &5367016283644324006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178259134005273492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acce17e1ffd49414385f8d99a3956c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2179951479655175725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -155,6 +192,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d898df0b8b7ae0043a6734e22da3b7a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3297395798689270512}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d898df0b8b7ae0043a6734e22da3b7a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 513818092317049852}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d898df0b8b7ae0043a6734e22da3b7a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4290241494137955579}
   m_SourcePrefab: {fileID: 100100000, guid: d898df0b8b7ae0043a6734e22da3b7a0, type: 3}
 --- !u!1 &1333583925546724220 stripped
 GameObject:
@@ -182,6 +225,54 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &513818092317049852
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333583925546724220}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.05
+  m_Speed: 0.35
+  m_Acceleration: 0.8
+  avoidancePriority: 50
+  m_AngularSpeed: 12
+  m_StoppingDistance: 0.2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.14
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &4290241494137955579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333583925546724220}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711854c7b03274b2aa9f965ff72af8dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 513818092317049852}
+  player: {fileID: 830051244878338572, guid: 5de06843ddfba4104a82a4d6e1bb37a1, type: 3}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  walkPoint: {x: 0.01, y: 0.01, z: 0.01}
+  walkPointRange: 1.5
+  sightRange: 1.5
+  attackRange: 0.2
+  playerInSightRange: 0
+  playerInAttackRange: 0
 --- !u!4 &1858305696212349382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d898df0b8b7ae0043a6734e22da3b7a0, type: 3}
