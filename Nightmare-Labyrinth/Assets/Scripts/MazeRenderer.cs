@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MazeRenderer : MonoBehaviour
 {
     [SerializeField] MazeGenerator mazeGenerator;
     [SerializeField] GameObject MazeCellPrefab;
 
+    public Image deathImage;
     private List<GameObject> mazeCells = new List<GameObject>();
     public float CellSize = 1f;
 
@@ -45,6 +47,7 @@ public class MazeRenderer : MonoBehaviour
 
     private void Start()
     {
+        deathImage.enabled = false;
         populateMaze();
     }
 

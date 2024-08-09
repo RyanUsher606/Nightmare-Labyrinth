@@ -19,8 +19,6 @@ public class EndLightController : MonoBehaviour
             float distance = Vector3.Distance(player.position, endPosition);
             float t = Mathf.Clamp01(1 - (distance / maxDistance));
 
-            print(1 - (distance / maxDistance));
-
             if (t > 0)
             {
 
