@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3721952330058909921}
   - component: {fileID: 1613152039679708792}
   - component: {fileID: -6546945356608590986}
-  - component: {fileID: -136017129600245125}
+  - component: {fileID: -7335390265874754817}
   m_Layer: 0
   m_Name: CoilHead
   m_TagString: Untagged
@@ -109,7 +109,7 @@ CapsuleCollider:
   m_Height: 9.750732
   m_Direction: 1
   m_Center: {x: 0, y: 3.8795166, z: -0.50284195}
---- !u!114 &-136017129600245125
+--- !u!114 &-7335390265874754817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2139511573260387349}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d368e057abdf44360b73ea717e12426e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d4b724adeccc47918a0825bbf83e0fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4849896386622969542
@@ -205,7 +205,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &5101221557226347437
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -219,6 +219,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

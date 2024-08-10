@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8788993935991696643}
   - component: {fileID: 7775680755036590014}
   - component: {fileID: 3671632912732703123}
-  - component: {fileID: -2521780880301699189}
+  - component: {fileID: -9157406170603409632}
   m_Layer: 0
   m_Name: Bracken
   m_TagString: Untagged
@@ -109,7 +109,7 @@ CapsuleCollider:
   m_Height: 7
   m_Direction: 1
   m_Center: {x: 0, y: 2.763603, z: 0}
---- !u!114 &-2521780880301699189
+--- !u!114 &-9157406170603409632
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4178259134005273492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d368e057abdf44360b73ea717e12426e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d4b724adeccc47918a0825bbf83e0fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2179951479655175725
@@ -206,7 +206,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &3297395798689270512
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -220,6 +220,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

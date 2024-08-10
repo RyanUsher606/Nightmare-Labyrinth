@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7203854418031032188}
   - component: {fileID: 9047217037947490496}
   - component: {fileID: 2254951356263263219}
-  - component: {fileID: -8429279031120831326}
+  - component: {fileID: 4783635811654739628}
   m_Layer: 0
   m_Name: Demogorgon
   m_TagString: Untagged
@@ -109,7 +109,7 @@ CapsuleCollider:
   m_Height: 6.0604687
   m_Direction: 1
   m_Center: {x: 0.016134024, y: 2.5302343, z: 0}
---- !u!114 &-8429279031120831326
+--- !u!114 &4783635811654739628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6399693696384826571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d368e057abdf44360b73ea717e12426e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d4b724adeccc47918a0825bbf83e0fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3858971532713181803
@@ -205,7 +205,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8545948200933687844
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -219,6 +219,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
