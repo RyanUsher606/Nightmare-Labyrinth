@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - NextLevel
   - Quit
+  - DeathImage
   layers:
   - Default
   - TransparentFX

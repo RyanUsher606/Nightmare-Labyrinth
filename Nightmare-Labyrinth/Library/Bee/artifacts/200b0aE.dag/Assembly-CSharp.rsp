@@ -365,6 +365,7 @@
 "Assets/Scripts/EndTrigger.cs"
 "Assets/Scripts/EnemyAi.cs"
 "Assets/Scripts/EnemyCollisionTrigger.cs"
+"Assets/Scripts/EnemyContact.cs"
 "Assets/Scripts/FlickeringLight.cs"
 "Assets/Scripts/LightController.cs"
 "Assets/Scripts/MazeCellObject.cs"

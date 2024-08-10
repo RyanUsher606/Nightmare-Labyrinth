@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7203854418031032188}
   - component: {fileID: 9047217037947490496}
   - component: {fileID: 2254951356263263219}
-  - component: {fileID: -8429279031120831326}
+  - component: {fileID: 3608410263920754999}
   m_Layer: 0
   m_Name: Demogorgon
   m_TagString: Untagged
@@ -109,7 +109,7 @@ CapsuleCollider:
   m_Height: 6.0604687
   m_Direction: 1
   m_Center: {x: 0.016134024, y: 2.5302343, z: 0}
---- !u!114 &-8429279031120831326
+--- !u!114 &3608410263920754999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,9 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6399693696384826571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d368e057abdf44360b73ea717e12426e, type: 3}
+  m_Script: {fileID: 11500000, guid: 489b46a5715c80943935d28e26b01915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSound: {fileID: 8300000, guid: a77d9b2400cfcdd4eb0a38521c3ae6c9, type: 3}
 --- !u!1001 &3858971532713181803
 PrefabInstance:
   m_ObjectHideFlags: 0
